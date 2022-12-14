@@ -41,8 +41,21 @@
         background: url(../assets/image/line.png) no-repeat center center;
     }
 
-    .colors{
-        background: url(../assets/image/colors.png);
+    .color{
+        margin-left: 10px;
+    }
+
+    .undo{
+        background: url(../assets/image/undo.png) no-repeat center center;
+        margin-left: auto;
+    }
+
+    .redo{
+        background: url(../assets/image/redo.png) no-repeat center center;
+    }
+    .save{
+        background: url(../assets/image/save.png) no-repeat center center;
+        margin-right: 10px;
     }
 }
 
