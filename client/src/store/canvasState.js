@@ -1,65 +1,69 @@
-import { makeAutoObservable } from "mobx";
+import {makeAutoObservable} from "mobx";
 
 class CanvasState {
-    canvas = null;
+    canvas = null
+    socket = null
+    sessionid = null
+    undoList = []
+    redoList = []
+    username = ""
 
-    undoList =[]
-    redoList =[]
-    username =""
-
-    constructor(){
+    constructor() {
         makeAutoObservable(this)
     }
-    
-    setUsername(username){
-        this.username=username
+
+    setSessionId(id) {
+        this.sessionid = id
+    }
+    setSocket(socket) {
+        this.socket = socket
     }
 
-    setCanvas(canvas){
-        this.canvas=canvas
+    setUsername(username) {
+        this.username = username
     }
 
-    pushToUndo(data){
+    setCanvas(canvas) {
+        this.canvas = canvas
+    }
+
+    pushToUndo(data) {
         this.undoList.push(data)
     }
 
-    pushToRedo(data){
+    pushToRedo(data) {
         this.redoList.push(data)
     }
 
-
-    undo(){
+    undo() {
         let ctx = this.canvas.getContext('2d')
-        if(this.undoList.length > 0){
-            let dataURL = this.undoList.pop()
+        if (this.undoList.length > 0) {
+            let dataUrl = this.undoList.pop()
             this.redoList.push(this.canvas.toDataURL())
             let img = new Image()
-            img.src = dataURL
-            img.onload = () =>{
-                ctx.clearRect(0,0 ,this.canvas.width, this.canvas.height)
-                ctx.drawImage(img,0,0, this.canvas.width, this.canvas.height)
-                
+            img.src = dataUrl
+            img.onload =  () => {
+                ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
+                ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)
             }
         } else {
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.heigth)
         }
     }
 
-    redo(){
+    redo() {
         let ctx = this.canvas.getContext('2d')
-        if(this.redoList.length > 0){
-            let dataURL = this.redoList.pop()
+        if (this.redoList.length > 0) {
+            let dataUrl = this.redoList.pop()
             this.undoList.push(this.canvas.toDataURL())
             let img = new Image()
-            img.src = dataURL
-            img.onload = () =>{
-                ctx.clearRect(0,0 ,this.canvas.width, this.canvas.height)
-                ctx.drawImage(img,0,0, this.canvas.width, this.canvas.height)
-                
+            img.src = dataUrl
+            img.onload =  () => {
+                ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
+                ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)
             }
         }
-        }
- 
+    }
 
 }
 
